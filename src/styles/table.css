@@ -1,0 +1,47 @@
+
+#person-table {
+    width: 100%;
+    text-align: middle;
+}
+
+#person-table tr {
+    vertical-align: middle;
+}
+
+#person-table th, td {
+    text-align: center;
+    display: table-cell;
+}
+
+#person-table th {
+    height: 50px;
+    width: 25%;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+#person-table td {
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+#person-table .td-number {
+    width: 50px;
+}
+
+#person-table .td-icon, .th-icon {
+    width: 50px;
+}
+
+#person-table td div {
+    justify-content: center;
+}
+
+#person-table td input[type="text"] {
+    max-width: 100px;
+    margin: 0
+}
+
+#person-table td input[type="number"] {
+    max-width: 75px;
+}
