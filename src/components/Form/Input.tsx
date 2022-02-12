@@ -3,33 +3,55 @@ import React, { useState, useEffect } from "react";
 interface Props {
   type: string;
   defaultValue?: string | number;
-  isRequired?: boolean;
-  setValue: (value: any) => void;
+  name?: string;
+  id?: string;
+  className?: string;
+  placeholder?: string;
   min?: number;
   max?: number;
+  required?: boolean;
+  value?: any;
+  setValue: (value: any) => void;
 }
 
 export default function Input({
   type,
   defaultValue,
-  isRequired,
-  setValue,
+  name,
+  id,
+  className,
+  placeholder,
   min,
   max,
+  required,
+  value,
+  setValue,
 }: Props) {
   const [style, setStyle] = useState<object>(defaultStyle);
-  const [required, setRequired] = useState<boolean>(true);
+  const [isRequired, setRequired] = useState<boolean>(true);
   const [feedbackVisible, setFeedbackVisible] = useState<boolean>(false);
   const [valueIsValid, setValueIsValid] = useState<boolean>(false);
 
   useEffect(() => {
-
-    if (isRequired && defaultValue === undefined) {
+    if ((required && value === "") || (required && value === 0)) {
       setRequired(true);
     } else {
       setRequired(false);
     }
-  }, [isRequired]);
+  }, [required]);
+
+  useEffect(() => {
+    if (value === "" || value === 0) {
+      setStyle(defaultStyle);
+      setRequired(true);
+      setFeedbackVisible(false);
+    }
+  }, [value]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setValue(e.target.value);
+  };
 
   const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -69,14 +91,20 @@ export default function Input({
         type={type}
         style={style}
         defaultValue={defaultValue}
+        value={value}
         data-testid="input-component"
         min={min}
         max={max}
         onFocus={() => setStyle(focus)}
         onBlur={(e) => handleBlur(e)}
+        onChange={(e) => handleChange(e)}
+        name={name}
+        id={id}
+        className={className}
+        placeholder={placeholder}
       />
-      {required === true && (
-        <span style={asteriskStyle} data-testid="input-required">
+      {isRequired === true && (
+        <span style={requiredStyle} data-testid="input-required">
           required
         </span>
       )}
@@ -131,7 +159,7 @@ const validValue = {
   borderRadius: borderRadius,
 };
 
-const asteriskStyle = {
+const requiredStyle = {
   fontSize: "0.8rem",
   color: "red",
   fontStyle: "italic",

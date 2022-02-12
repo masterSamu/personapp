@@ -7,11 +7,13 @@ const tableHeaders = ["firstname", "lastname", "age", "edit", "delete"];
 
 function App() {
   const [persons, setPersons] = useState<Array<object>>([]);
+  const [error, setError] = useState<string | boolean>(false);
 
   return (
     <div className="App">
       <h1>Person App</h1>
-        <Form setData={setPersons} data={persons} />
+        <Form setData={setPersons} data={persons} setError={setError} />
+        {error !== false && <p>{error}</p>}
         <Table tableHeaders={tableHeaders} tableData={persons} setData={setPersons} />
     </div>
   );

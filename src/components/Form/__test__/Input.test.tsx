@@ -40,19 +40,19 @@ test('renders learn react link', () => {
 });
 
 test("doesn't render required text when required prop is false", () => {
-  render(<Input type="text" setValue={jest.fn()} isRequired={false} />);
+  render(<Input type="text" setValue={jest.fn()} required={false} />);
   const required = screen.queryByTestId("input-required");
   expect(required).not.toBeInTheDocument();
 })
 
 test("renders required text when required prop is true", () => {
-  render(<Input type="text" setValue={jest.fn()} isRequired={true} />);
+  render(<Input type="text" setValue={jest.fn()} required={true} />);
   const required = screen.queryByTestId("input-required");
   expect(required).toBeInTheDocument();
 })
 
 test ("renders feedback based on input", async () => {
-  render(<Input type="text" setValue={jest.fn()} isRequired={true} />);
+  render(<Input type="text" setValue={jest.fn()} required={true} />);
   const input = screen.getByTestId("input-component")
   expect(input).toBeInTheDocument();
   fireEvent.focus(input);
@@ -71,7 +71,7 @@ test ("renders feedback based on input", async () => {
 })
 
 test("Input field styles are changing properly", () => {
-  render(<Input type="text" setValue={jest.fn()} isRequired={true} />);
+  render(<Input type="text" setValue={jest.fn()} required={true} />);
   const input = screen.getByTestId("input-component");
 
   expect(input).toHaveStyle(defaultStyle);

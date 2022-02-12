@@ -45,3 +45,13 @@
 #person-table td input[type="number"] {
     max-width: 75px;
 }
+
+#person-table td button {
+    background-color: inherit;
+    border: none;
+    transition: all .2s ease-in-out;
+}
+
+#person-table td button:hover {
+    transform: scale(1.2);
+}
