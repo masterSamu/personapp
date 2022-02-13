@@ -2,11 +2,8 @@ import React, { useState } from "react";
 import CheckIcon from "../Icons/CheckIcon";
 import DeleteIcon from "../Icons/DeleteIcon";
 import EditIcon from "../Icons/EditIcon";
-
 import "../../styles/table.css";
 import Input from "../Form/Input";
-import { setEnvironmentData } from "worker_threads";
-import { idText } from "typescript";
 
 interface Props {
   tableHeaders: Array<string>;
@@ -19,8 +16,13 @@ export default function Table({ tableHeaders, tableData, setData }: Props) {
   const [updatedFirstname, setUpdatedFirstname] = useState<string>("");
   const [updatedLastname, setUpdatedLastname] = useState<string>("");
   const [updatedAge, setUpdatedAge] = useState<number>(0);
+  const [sortOrder, setSortOrder] = useState<any>({
+    firstname: "desc",
+    lastname: "desc",
+    age: "desc",
+  });
 
-  const toggleSaveEdit = () => {
+  const toggleUpdating = () => {
     setIsUpdating(!isUpdating);
   };
 
@@ -41,24 +43,65 @@ export default function Table({ tableHeaders, tableData, setData }: Props) {
     setData(newData);
   };
 
+  const toggleSort = (header: string) => {
+    switch (header) {
+      case "firstname":
+        if (sortOrder.firstname === "asc") {
+          setData(
+            [...tableData].sort((a, b) => (a.firstname < b.firstname ? 1 : -1))
+          );
+          setSortOrder({ ...sortOrder, firstname: "desc" });
+        } else if (sortOrder.firstname === "desc") {
+          setData(
+            [...tableData].sort((a, b) => (a.firstname > b.firstname ? 1 : -1))
+          );
+          setSortOrder({ ...sortOrder, firstname: "asc" });
+        }
+        break;
+      case "lastname":
+        if (sortOrder.lastname === "asc") {
+          setData(
+            [...tableData].sort((a, b) => (a.lastname > b.lastname ? 1 : -1))
+          );
+          setSortOrder({ ...sortOrder, lastname: "desc" });
+        } else {
+          setData(
+            [...tableData].sort((a, b) => (a.lastname < b.lastname ? 1 : -1))
+          );
+          setSortOrder({ ...sortOrder, lastname: "asc" });
+        }
+
+        break;
+      case "age":
+        if (sortOrder.age === "asc") {
+          setData([...tableData].sort((a, b) => (a.age > b.age ? 1 : -1)));
+          setSortOrder({ ...sortOrder, age: "desc" });
+        } else {
+          setData([...tableData].sort((a, b) => (a.age < b.age ? 1 : -1)));
+          setSortOrder({ ...sortOrder, age: "asc" });
+        }
+        break;
+    }
+  };
+
   return (
-    <table id="person-table">
+    <table id="person-table" data-testid="table-person">
       <thead>
         <tr>
           {tableHeaders?.map((item, index) => {
             return (
-              <th key={index} className={index > 2 ? "th-icon" : "th"}>
-                {item}
+              <th key={index} className={index > 2 ? "th-icon" : "th-data"}>
+                <span onClick={() => toggleSort(item)}>{item}</span>
               </th>
             );
           })}
         </tr>
       </thead>
       <tbody>
-        {tableData?.map((item) => {
+        {tableData.map((item) => {
           return (
             <tr key={item.id}>
-              <td>
+              <td data-testid="td-firstname">
                 {isUpdating ? (
                   <Input
                     type="text"
@@ -71,7 +114,7 @@ export default function Table({ tableHeaders, tableData, setData }: Props) {
                   item.firstname
                 )}
               </td>
-              <td>
+              <td data-testid="td-lastname">
                 {isUpdating ? (
                   <Input
                     type="text"
@@ -84,7 +127,7 @@ export default function Table({ tableHeaders, tableData, setData }: Props) {
                   item.lastname
                 )}
               </td>
-              <td className="td-number">
+              <td className="td-number" data-testid="td-age">
                 {isUpdating ? (
                   <Input
                     type="number"
@@ -97,19 +140,29 @@ export default function Table({ tableHeaders, tableData, setData }: Props) {
                   item.age
                 )}
               </td>
-              <td className="td-icon">
-                <span onClick={toggleSaveEdit}>
+              <td className="td-icon" data-testid="td-edit">
+                <span onClick={toggleUpdating}>
                   {isUpdating ? (
-                    <button onClick={() => handleUpdate(item.id)} aria-label="save row">
+                    <button
+                      onClick={() => handleUpdate(item.id)}
+                      aria-label="save row"
+                      data-testid="btn-save"
+                    >
                       <CheckIcon />
                     </button>
                   ) : (
-                    <button aria-label="edit row"><EditIcon /></button>
+                    <button aria-label="edit row" data-testid="btn-edit">
+                      <EditIcon />
+                    </button>
                   )}
                 </span>
               </td>
-              <td className="td-icon">
-                <button onClick={() => handleDelete(item.id)} aria-label="delete row">
+              <td className="td-icon" data-testid="td-delete">
+                <button
+                  onClick={() => handleDelete(item.id)}
+                  aria-label="delete row"
+                  data-testid="btn-delete"
+                >
                   <DeleteIcon />
                 </button>
               </td>

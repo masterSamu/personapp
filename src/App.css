@@ -1,13 +1,27 @@
 
 body {
   width: 95%;
+  background-color: #FFF;
 }
 
 .App {
   max-width: 1350px;
+  background-color: #FFF;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 
 .App h1 {
   text-align: center;
+}
+
+.form-container {
+  padding: 20px;
+  border-bottom: 15px dotted #3FD2C7;
+}
+
+.table-container {
+  padding: 10px;
 }
 

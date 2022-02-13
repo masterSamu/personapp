@@ -28,7 +28,7 @@ export default function Input({
   setValue,
 }: Props) {
   const [style, setStyle] = useState<object>(defaultStyle);
-  const [isRequired, setRequired] = useState<boolean>(true);
+  const [isRequired, setRequired] = useState<boolean>(false);
   const [feedbackVisible, setFeedbackVisible] = useState<boolean>(false);
   const [valueIsValid, setValueIsValid] = useState<boolean>(false);
 
@@ -41,10 +41,12 @@ export default function Input({
   }, [required]);
 
   useEffect(() => {
-    if (value === "" || value === 0) {
+    if ((value === "" || value === 0) ) {
       setStyle(defaultStyle);
-      setRequired(true);
       setFeedbackVisible(false);
+      if (required) {
+        setRequired(true);
+      }
     }
   }, [value]);
 
@@ -118,6 +120,7 @@ export default function Input({
             bad value
           </span>
         ))}
+        {!required && !feedbackVisible && <span style={emptyFeedback}></span>}
     </div>
   );
 }
@@ -164,6 +167,7 @@ const requiredStyle = {
   color: "red",
   fontStyle: "italic",
   marginLeft: "5px",
+  width: "50px"
 };
 
 const validText = {
@@ -171,6 +175,7 @@ const validText = {
   color: "green",
   fontStyle: "italic",
   marginLeft: "5px",
+  width: "50px"
 };
 
 const invalidText = {
@@ -178,4 +183,9 @@ const invalidText = {
   color: "red",
   fontStyle: "italic",
   marginLeft: "5px",
+  width: "50px"
 };
+
+const emptyFeedback = {
+  width: "50px"
+}

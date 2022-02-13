@@ -7,9 +7,10 @@ interface Props {
   data: Array<object>;
   setData: (value: Array<object>) => void;
   setError: (value: string | boolean) => void;
+  setSuccessfull: (value: string | boolean) => void;
 }
 
-export default function Form({ data, setData, setError }: Props) {
+export default function Form({ data, setData, setError, setSuccessfull }: Props) {
   const [firstname, setFirstname] = useState<string>("");
   const [lastname, setLastname] = useState<string>("");
   const [age, setAge] = useState<number>(0);
@@ -37,17 +38,19 @@ export default function Form({ data, setData, setError }: Props) {
     const isEmpty = firstname?.length === 0 || lastname?.length === 0 || age === undefined
     if (isUndefined || isEmpty) {
       setError("Invalid input values!");
+      setSuccessfull(false);
     } else {
       setData([...data, object]);
       setError(false);
       setFirstname("");
       setLastname("");
       setAge(0);
+      setSuccessfull("Person added succesfully!");
     }
   };
 
   return (
-    <form style={formStyle} onSubmit={handleSubmit}>
+    <form style={formStyle} onSubmit={handleSubmit} data-testid="form-add">
       <div style={inputContainer}>
         <label>Firstname</label>
         <Input
@@ -83,7 +86,7 @@ export default function Form({ data, setData, setError }: Props) {
       <div style={inputContainer}>
         <button type="submit" aria-label="submit">
           Submit
-        </button>{" "}
+        </button>
       </div>
     </form>
   );

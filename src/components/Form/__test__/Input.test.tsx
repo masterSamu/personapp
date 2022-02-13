@@ -33,20 +33,20 @@ const validValue = {
   borderRadius: borderRadius,
 };
 
-test('renders learn react link', () => {
-  render(<Input type="text" setValue={jest.fn()} />);
+test('renders component without crashing', () => {
+  render(<Input type="text"value="" setValue={jest.fn()} />);
   const input = screen.getByTestId("input-component");
   expect(input).toBeInTheDocument();
 });
 
 test("doesn't render required text when required prop is false", () => {
-  render(<Input type="text" setValue={jest.fn()} required={false} />);
+  render(<Input type="text" value="" setValue={jest.fn()} required={false} />);
   const required = screen.queryByTestId("input-required");
   expect(required).not.toBeInTheDocument();
 })
 
 test("renders required text when required prop is true", () => {
-  render(<Input type="text" setValue={jest.fn()} required={true} />);
+  render(<Input type="text" value="" setValue={jest.fn()} required={true} />);
   const required = screen.queryByTestId("input-required");
   expect(required).toBeInTheDocument();
 })

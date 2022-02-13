@@ -2,6 +2,9 @@
 #person-table {
     width: 100%;
     text-align: middle;
+    background-color: #e9e9e9;
+    border: none;
+    border-collapse: collapse;
 }
 
 #person-table tr {
@@ -14,19 +17,34 @@
 }
 
 #person-table th {
-    height: 50px;
-    width: 25%;
+    height: 45px;
+    width: fit-content;
     font-size: 1.5rem;
     text-align: center;
+    background-color: #99DDFF;
+    border-bottom: 3px solid rgb(78, 78, 78);
 }
 
 #person-table td {
     font-size: 1.3rem;
     text-align: center;
+    color: #000;
+}
+
+#person-table tr:hover {
+    background-color: rgb(253, 253, 253);
+}
+
+tr:nth-child(even) {
+    background-color: #d6d6d6;
+}
+
+#person-table .th-icon {
+    width: fit-content;
 }
 
 #person-table .td-number {
-    width: 50px;
+    width: 70px;
 }
 
 #person-table .td-icon, .th-icon {
@@ -50,8 +68,17 @@
     background-color: inherit;
     border: none;
     transition: all .2s ease-in-out;
+    color: #000;
 }
 
 #person-table td button:hover {
     transform: scale(1.2);
+}
+
+#person-table .th-data span {
+    cursor: pointer;
+}
+
+#person-table .th-data span:hover {
+    color: rgb(82, 82, 82);
 }
