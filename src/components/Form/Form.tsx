@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { idText } from "typescript";
 import useWindowDimensions from "../../CustomHooks/useWindowDimensions";
 import Input from "./Input";
+import SubmitButton from "../Button/SubmitButton";
 
 interface Props {
   data: Array<object>;
@@ -19,8 +19,10 @@ export default function Form({ data, setData, setError, setSuccessfull }: Props)
   const { width } = useWindowDimensions();
 
   useEffect(() => {
-    if (width < 576) {
+    if (width < 764) {
       setFormStyle(mobileStyles.form);
+    } else {
+      setFormStyle(defaultStyle)
     }
   }, [width]);
 
@@ -83,10 +85,8 @@ export default function Form({ data, setData, setError, setSuccessfull }: Props)
           value={age}
         />
       </div>
-      <div style={inputContainer}>
-        <button type="submit" aria-label="submit">
-          Submit
-        </button>
+      <div style={btnContainer}>
+        <SubmitButton type="submit" text="Submit" />
       </div>
     </form>
   );
@@ -107,6 +107,14 @@ const inputContainer = {
   gap: "10px",
 };
 
+const btnContainer = {
+  display: "flex",
+  flexDirection: "column" as "column",
+  gap: "10px",
+  justifyContent: "flex-end",
+}
+
+
 const mobileStyles = {
   form: {
     display: "flex",
@@ -116,4 +124,5 @@ const mobileStyles = {
     fontSize: "1.2rem",
     padding: "20px",
   },
+
 };

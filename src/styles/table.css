@@ -1,4 +1,5 @@
 
+
 #person-table {
     width: 100%;
     text-align: middle;
@@ -12,23 +13,24 @@
 }
 
 #person-table th, td {
-    text-align: center;
     display: table-cell;
 }
 
 #person-table th {
-    height: 45px;
+    padding: 10px 5px;
     width: fit-content;
     font-size: 1.5rem;
-    text-align: center;
-    background-color: #99DDFF;
-    border-bottom: 3px solid rgb(78, 78, 78);
+    text-align: left;
+    background-color: #5F05A3;
+    color: #FFF;
+    border-bottom: 3px solid #410370;
 }
 
 #person-table td {
     font-size: 1.3rem;
-    text-align: center;
+    text-align: left;
     color: #000;
+    padding: 3px 5px;
 }
 
 #person-table tr:hover {
@@ -43,12 +45,13 @@ tr:nth-child(even) {
     width: fit-content;
 }
 
-#person-table .td-number {
+#person-table  .td-number {
     width: 70px;
 }
 
 #person-table .td-icon, .th-icon {
     width: 50px;
+    text-align: center;
 }
 
 #person-table td div {
@@ -80,5 +83,5 @@ tr:nth-child(even) {
 }
 
 #person-table .th-data span:hover {
-    color: rgb(82, 82, 82);
+    color: rgb(235, 220, 255);
 }

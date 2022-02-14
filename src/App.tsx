@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import Form from "./components/Form/Form";
 import Table from "./components/Table/Table";
@@ -20,17 +20,23 @@ function App() {
           setError={setError}
           setSuccessfull={setSuccesfull}
         />
-      {error !== false && <p>{error}</p>}
-      {succesfull !== false && (
-        <p data-testid="succesfull-message">{succesfull}</p>
-      )}
+        {error !== false && <p className="error">{error}</p>}
+        {succesfull !== false && (
+          <p className="success" data-testid="succesfull-message">{succesfull}</p>
+        )}
       </div>
       <div className="table-container">
-        <Table
-          tableHeaders={tableHeaders}
-          tableData={persons}
-          setData={setPersons}
-        />
+        {persons.length > 0 ? (
+          <Table
+            tableHeaders={tableHeaders}
+            tableData={persons}
+            setData={setPersons}
+          />
+        ) : (
+          <p data-testid="no-data-message">
+            No data to show, maybe you should add person in form above.
+          </p>
+        )}
       </div>
     </div>
   );
