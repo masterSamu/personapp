@@ -1,24 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import CheckIcon from "../Icons/CheckIcon";
 import DeleteIcon from "../Icons/DeleteIcon";
 import EditIcon from "../Icons/EditIcon";
 import Input from "../Form/Input";
 
 interface Props {
-  item: { id: number; firstname: string; lastname: string; age: number; };
+  item: { id: number; firstname: string; lastname: string; age: number };
   tableData: Array<any>;
   setData: (value: Array<any>) => void;
 }
 
-export default function TableRow({
-  item,
-  tableData,
-  setData
-}: Props) {
+export default function TableRow({ item, tableData, setData }: Props) {
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
-  const [updatedFirstname, setUpdatedFirstname] = useState<string>(item.firstname);
+  const [updatedFirstname, setUpdatedFirstname] = useState<string>(
+    item.firstname
+  );
   const [updatedLastname, setUpdatedLastname] = useState<string>(item.lastname);
   const [updatedAge, setUpdatedAge] = useState<number>(item.age);
+  const [className, setClassName] = useState<string>("");
 
   const toggleUpdating = () => {
     setIsUpdating(!isUpdating);
@@ -31,19 +30,43 @@ export default function TableRow({
       lastname: updatedLastname,
       age: updatedAge,
     };
+    const isValid: boolean = validateInputs();
+    if (isValid) {
+      const index = tableData.findIndex((item) => item.id === id);
+      const newData = [...tableData];
+      newData[index] = object;
+      setData(newData);
+      setClassName("");
+      setIsUpdating(false);
+    } else {
+      setIsUpdating(true);
+      setClassName("row-error");
+    }
+  };
+
+  const handleDelete = async (id: number) => {
+    setClassName("delete");
+    await new Promise(resolve => setTimeout(resolve, 1000));
     const newData = tableData.filter((item) => item.id !== id);
-    newData.push(object);
     setData(newData);
   };
 
-  const handleDelete = (id: number) => {
-    const newData = tableData.filter((item) => item.id !== id);
-    setData(newData);
-  };
+  const validateInputs = () => {
+    let isValid = false;
+    const fnameIsValid = updatedFirstname.length > 0;
+    const lastnameIsValid = updatedLastname.length > 0;
+    const ageIsValid = updatedAge > 0 && updatedAge <= 150;
 
+    if (fnameIsValid && lastnameIsValid && ageIsValid) {
+      isValid = true;
+    }
+    console.log(isValid);
+    console.log("fn: " + updatedFirstname);
+    return isValid;
+  };
 
   return (
-    <tr key={item.id}>
+    <tr className={className}>
       <td data-testid="td-firstname">
         {isUpdating ? (
           <Input
@@ -87,17 +110,21 @@ export default function TableRow({
         )}
       </td>
       <td className="td-icon" data-testid="td-edit">
-        <span onClick={toggleUpdating}>
+        <span>
           {isUpdating ? (
             <button
               onClick={() => handleUpdate(item.id)}
               aria-label="save row"
               data-testid="btn-save"
             >
-              <CheckIcon />
+              <CheckIcon className={className} />
             </button>
           ) : (
-            <button aria-label="edit row" data-testid="btn-edit">
+            <button
+              aria-label="edit row"
+              data-testid="btn-edit"
+              onClick={toggleUpdating}
+            >
               <EditIcon />
             </button>
           )}

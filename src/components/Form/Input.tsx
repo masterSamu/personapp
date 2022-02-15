@@ -41,7 +41,7 @@ export default function Input({
   }, [required]);
 
   useEffect(() => {
-    if ((value === "" || value === 0) ) {
+    if ((value === "" || value === 0 || value === undefined) ) {
       setStyle(defaultStyle);
       setFeedbackVisible(false);
       if (required) {
@@ -117,7 +117,7 @@ export default function Input({
           </span>
         ) : (
           <span style={invalidText} data-testid="input-invalid">
-            bad value
+            bad
           </span>
         ))}
         {!required && !feedbackVisible && <span style={emptyFeedback}></span>}
@@ -171,24 +171,24 @@ const requiredStyle = {
   fontSize: "0.8rem",
   color: "red",
   fontStyle: "italic",
-  marginLeft: "5px",
-  width: "50px"
+  marginLeft: "6px",
+  width: "35px"
 };
 
 const validText = {
   fontSize: "0.8rem",
   color: "green",
   fontStyle: "italic",
-  marginLeft: "5px",
-  width: "50px"
+  marginLeft: "6px",
+  width: "35px"
 };
 
 const invalidText = {
   fontSize: "0.8rem",
   color: "red",
   fontStyle: "italic",
-  marginLeft: "5px",
-  width: "50px"
+  marginLeft: "6px",
+  width: "35px",
 };
 
 const emptyFeedback = {

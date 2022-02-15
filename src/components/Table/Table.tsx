@@ -1,9 +1,5 @@
-import React, { useEffect, useState } from "react";
-import CheckIcon from "../Icons/CheckIcon";
-import DeleteIcon from "../Icons/DeleteIcon";
-import EditIcon from "../Icons/EditIcon";
+import React, { useState } from "react";
 import "../../styles/table.css";
-import Input from "../Form/Input";
 import TableRow from "./TableRow";
 
 interface Props {
@@ -78,7 +74,7 @@ export default function Table({ tableHeaders, tableData, setData }: Props) {
       <tbody>
         {tableData.map((item) => {
           return (
-            <TableRow item={item} tableData={tableData} setData={setData} />
+            <TableRow item={item} tableData={tableData} setData={setData} key={item.id} />
           );
         })}
       </tbody>

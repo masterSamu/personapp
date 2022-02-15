@@ -1,8 +1,11 @@
 import {AiFillCheckCircle} from "react-icons/ai";
 
-export default function CheckIcon() {
+interface Props {
+  className: string;
+}
+export default function CheckIcon({className}: Props) {
   return (
-    <AiFillCheckCircle style={style} />
+    <AiFillCheckCircle style={style} className={className} />
   )
 }
 

@@ -1,4 +1,3 @@
-import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import Input from "../Input";
 
@@ -60,7 +59,7 @@ test("renders feedback based on input", async () => {
   fireEvent.blur(input);
   const negativeFeedback = screen.queryByTestId("input-invalid");
   expect(negativeFeedback).toBeInTheDocument();
-  expect(negativeFeedback).toHaveTextContent("bad value");
+  expect(negativeFeedback).toHaveTextContent("bad");
 
   fireEvent.change(input, { target: { value: "Mike" } });
   fireEvent.blur(input);
