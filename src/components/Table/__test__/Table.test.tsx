@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import Table from "../Table";
 
 const tableHeaders = ["firstname", "lastname", "age", "edit", "delete"];
-const tableData = [{ firstname: "James", lastname: "Bond", age: 25 }];
+const tableData = [{ firstname: "James", lastname: "Bond", age: 25, id: 0 }];
 
 test("render without crashing", () => {
   render(

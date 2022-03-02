@@ -6,21 +6,24 @@ import Table from "./components/Table/Table";
 const tableHeaders = ["firstname", "lastname", "age", "edit", "delete"];
 
 function App() {
-  const [persons, setPersons] = useState<Array<object>>([]);
-  const [error, setError] = useState<string | boolean>(false);
-  const [succesfull, setSuccesfull] = useState<string | boolean>(false);
-  const [formMessageClass, setFormMessageClass] = useState<string>("form-message");
-  const [message, setMessage] = useState<string | boolean>("");
+  const [persons, setPersons] = useState<
+    Array<{ firstname: string; lastname: string; age: number; id: number }>
+  >([]);
+  const [error, setError] = useState<string | null>(null);
+  const [succesfull, setSuccesfull] = useState<string | null>(null);
+  const [formMessageClass, setFormMessageClass] =
+    useState<string>("form-message");
+  const [message, setMessage] = useState<string>("");
 
   useEffect(() => {
-    if (error !== false) {
-      setFormMessageClass("form-message error")
+    if (error !== null) {
+      setFormMessageClass("form-message error");
       setMessage(error);
-    } else if (succesfull !== false) {
-      setFormMessageClass("form-message success")
+    } else if (succesfull !== null) {
+      setFormMessageClass("form-message success");
       setMessage(succesfull);
     }
-  }, [error, succesfull])
+  }, [error, succesfull]);
 
   return (
     <div className="App">
@@ -32,7 +35,9 @@ function App() {
           setError={setError}
           setSuccessfull={setSuccesfull}
         />
-        <p className={formMessageClass} data-testid="form-message">{message}</p>
+        <p className={formMessageClass} data-testid="form-message">
+          {message}
+        </p>
       </div>
       <div className="table-container">
         {persons.length > 0 ? (

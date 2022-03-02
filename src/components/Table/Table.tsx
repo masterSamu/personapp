@@ -4,18 +4,32 @@ import TableRow from "./TableRow";
 
 interface Props {
   tableHeaders: Array<string>;
-  tableData: Array<any>;
-  setData: (value: Array<any>) => void;
+  tableData: Array<{
+    firstname: string;
+    lastname: string;
+    age: number;
+    id: number;
+  }>;
+  setData: (
+    value: Array<{
+      firstname: string;
+      lastname: string;
+      age: number;
+      id: number;
+    }>
+  ) => void;
 }
 
 export default function Table({ tableHeaders, tableData, setData }: Props) {
-  const [sortOrder, setSortOrder] = useState<any>({
+  const [sortOrder, setSortOrder] = useState<{
+    firstname: string;
+    lastname: string;
+    age: string;
+  }>({
     firstname: "desc",
     lastname: "desc",
     age: "desc",
   });
-
-
 
   const toggleSort = (header: string) => {
     switch (header) {
@@ -74,7 +88,12 @@ export default function Table({ tableHeaders, tableData, setData }: Props) {
       <tbody>
         {tableData.map((item) => {
           return (
-            <TableRow item={item} tableData={tableData} setData={setData} key={item.id} />
+            <TableRow
+              item={item}
+              tableData={tableData}
+              setData={setData}
+              key={item.id}
+            />
           );
         })}
       </tbody>

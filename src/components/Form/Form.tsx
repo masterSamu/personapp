@@ -4,13 +4,25 @@ import Input from "./Input";
 import SubmitButton from "../Button/SubmitButton";
 
 interface Props {
-  data: Array<object>;
-  setData: (value: Array<object>) => void;
-  setError: (value: string | boolean) => void;
-  setSuccessfull: (value: string | boolean) => void;
+  data: Array<{ firstname: string; lastname: string; age: number; id: number }>;
+  setData: (
+    value: Array<{
+      firstname: string;
+      lastname: string;
+      age: number;
+      id: number;
+    }>
+  ) => void;
+  setError: (value: string | null) => void;
+  setSuccessfull: (value: string | null) => void;
 }
 
-export default function Form({ data, setData, setError, setSuccessfull }: Props) {
+export default function Form({
+  data,
+  setData,
+  setError,
+  setSuccessfull,
+}: Props) {
   const [firstname, setFirstname] = useState<string>("");
   const [lastname, setLastname] = useState<string>("");
   const [age, setAge] = useState<number>(0);
@@ -22,7 +34,7 @@ export default function Form({ data, setData, setError, setSuccessfull }: Props)
     if (width < 764) {
       setFormStyle(mobileStyles.form);
     } else {
-      setFormStyle(defaultStyle)
+      setFormStyle(defaultStyle);
     }
   }, [width]);
 
@@ -37,13 +49,14 @@ export default function Form({ data, setData, setError, setSuccessfull }: Props)
     };
     const isUndefined =
       firstname === undefined || lastname === undefined || age === undefined;
-    const isEmpty = firstname?.length === 0 || lastname?.length === 0 || age === undefined
+    const isEmpty =
+      firstname?.length === 0 || lastname?.length === 0 || age === undefined;
     if (isUndefined || isEmpty) {
       setError("Invalid input values!");
-      setSuccessfull(false);
+      setSuccessfull(null);
     } else {
       setData([...data, object]);
-      setError(false);
+      setError(null);
       setFirstname("");
       setLastname("");
       setAge(0);
@@ -112,8 +125,7 @@ const btnContainer = {
   flexDirection: "column" as "column",
   gap: "10px",
   justifyContent: "flex-end",
-}
-
+};
 
 const mobileStyles = {
   form: {
@@ -124,5 +136,4 @@ const mobileStyles = {
     fontSize: "1.2rem",
     padding: "20px",
   },
-
 };
